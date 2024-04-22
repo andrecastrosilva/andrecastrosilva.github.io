@@ -1,0 +1,15 @@
+#menu-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#start-menu {
+    margin-bottom: 20px;
+}
+
+#game-container {
+    display: none; /* Initially hidden */
+}
