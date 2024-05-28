@@ -20,7 +20,8 @@ const renderer = new THREE.WebGLRenderer({
     alpha: true,
     antialias: true
 });
-renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = true; // Habilitar o mapa de sombras
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Tipo de sombra (opcional)
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -65,9 +66,19 @@ loader3.load(
     function (gltf) {
         const model = gltf.scene;
         
-        model.scale.set(1, 1.5, 1);
+        model.scale.set(1.4, 1.4, 1.4);
         model.position.set(cubeStartPosition.x, cubeStartPosition.y, cubeStartPosition.z);
+        
+        // Definir a rotação do modelo como 180 graus (Math.PI)
         model.rotation.y = Math.PI;
+
+        // Habilitar projeção de sombra
+        model.traverse(function (child) {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
 
         scene.add(model);
         characterModel = model;
@@ -88,8 +99,18 @@ loader4.load(
     'assets/models/Enemy/scene.gltf',
     function (gltf) {
         const model = gltf.scene;
-        model.scale.set(1, 1.5, 1);
-        model.rotation.y = Math.PI;
+        model.scale.set(1, 1, 1);
+        
+        // Ajuste da posição inicial para que o carro inimigo comece um pouco mais acima
+        model.rotation.y = -Math.PI / 2;
+
+        // Habilitar projeção de sombra
+        model.traverse(function (child) {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
 
         enemyCarModel = model;
     },
@@ -107,7 +128,7 @@ class Box extends THREE.Mesh {
         height,
         depth,
         color = '#00ff00',
-        velocity = { x: 0, y: 0, z: 0 },
+        velocity = { x: 0, y: 0, z: 1 },
         position = { x: 0, y: 0, z: 0 },
         zAcceleration = false
     }) {
@@ -135,6 +156,10 @@ class Box extends THREE.Mesh {
         this.gravity = -0.02;
 
         this.zAcceleration = zAcceleration;
+
+        // Configurar sombras
+        this.castShadow = true;
+        this.receiveShadow = true;
     }
 
     updateSides() {
@@ -193,7 +218,7 @@ scene.add(cube);
 
 const ground = new Box({
     width: 31.5,
-    height: 0.001,
+    height: 0.01,
     depth: 10000,
     color: '#0369a1',
     position: { x: cubeStartPosition.x, y: cubeStartPosition.y - 0.75, z: cubeStartPosition.z - 4950 }
@@ -205,7 +230,12 @@ scene.add(ground);
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.y = 3;
 light.position.z = 1;
-light.castShadow = true;
+light.castShadow = true; // Habilitar sombras para a luz
+
+light.shadow.mapSize.width = 1024; // Tamanho do mapa de sombras (opcional)
+light.shadow.mapSize.height = 1024; // Tamanho do mapa de sombras (opcional)
+light.shadow.camera.near = 0.5; // Distância mínima da sombra (opcional)
+light.shadow.camera.far = 50; // Distância máxima da sombra (opcional)
 
 scene.add(light);
 scene.add(new THREE.AmbientLight(0xffffff, 0.5));
@@ -216,7 +246,8 @@ const Keys = {
     a: { pressed: false },
     d: { pressed: false },
     s: { pressed: false },
-    w: { pressed: false }
+    w: { pressed: false },
+    p: { pressed: false }
 };
 
 window.addEventListener('keydown', (event) => {
@@ -233,10 +264,17 @@ window.addEventListener('keydown', (event) => {
         case 'KeyW':
             Keys.w.pressed = true;
             break;
-        case 'Space':
-            cube.velocity.y = 0.35;
-            if (characterModel) characterModel.position.y += 0.35;
+        case 'KeyC': // Change camera angle
+            cameraAngle = (cameraAngle + 1) % 3;
+            updateCameraPosition();
             break;
+        case 'KeyP': // Pause key
+            if (!Keys.p.pressed) {
+                Keys.p.pressed = true;
+                pauseGame();
+            }
+            break;
+        
     }
 });
 
@@ -254,6 +292,9 @@ window.addEventListener('keyup', (event) => {
         case 'KeyW':
             Keys.w.pressed = false;
             break;
+        case 'KeyP':
+            Keys.p.pressed = false;
+            break;
     }
 });
 
@@ -261,21 +302,57 @@ const enemies = [];
 const enemyCarInstances = [];
 const enemyBoundingBoxes = [];
 
+
 let frames = 0;
-let spawnRate = 200;
+let spawnRate = 100;
 
 let cubeZPosition = cube.position.z;
 const distanceThreshold = 50;
 
+let cameraAngle = 0;
+
 function updateCameraPosition() {
-    camera.position.x = cube.position.x;
-    camera.position.z = cube.position.z + 10;
+    switch (cameraAngle) {
+        case 0:
+            camera.position.x = cube.position.x;
+            camera.position.z = cube.position.z + 10;
+            camera.position.y = cube.position.y + 10;
+            break;
+        case 1:
+            camera.position.x = cube.position.x - 10 ;
+            camera.position.z = cube.position.z + 10;
+            camera.position.y = cube.position.y + 10;
+            break;
+        case 2:
+            camera.position.x = cube.position.x + 10  ;
+            camera.position.z = cube.position.z + 10;
+            camera.position.y = cube.position.y +10;
+            break;
+        default:
+            break;
+    }
     camera.lookAt(cube.position);
+}
+
+function gameOver(score) {
+    document.getElementById('game-over-scene').classList.remove('game-over-hidden'); // Show the scene
+    document.getElementById('game-over-score').textContent = score; // Update final score
+    // Stop animation or other game logic
+    document.getElementById('restart-button').addEventListener('click', () => {
+        // Reset the game
+        location.reload();
+    });
+}
+
+let isGamePaused = false;
+
+function pauseGame() {
+    isGamePaused = !isGamePaused;
 }
 
 function startGame() {
     let score = 0;
-
+    cube.velocity.z = -0.8;
     function updateScore() {
         score++;
         document.getElementById('score-value').innerText = score;
@@ -285,91 +362,86 @@ function startGame() {
         const animationId = requestAnimationFrame(animate);
         renderer.render(scene, camera);
 
-        updateCameraPosition();
+        if (!isGamePaused) {
+            updateCameraPosition();
 
-        cube.velocity.x = 0;
-        cube.velocity.z = 0;
+            cube.velocity.x = 0;
 
-        if (Keys.a.pressed) cube.velocity.x = -1;
-        else if (Keys.d.pressed) cube.velocity.x = 1;
-        if (Keys.s.pressed) cube.velocity.z = 1;
-        else if (Keys.w.pressed) cube.velocity.z = -1;
+            if (Keys.a.pressed) cube.velocity.x = -0.5;
+            else if (Keys.d.pressed) cube.velocity.x = 0.5;
+            //if (Keys.w.pressed) cube.velocity.z = -0.5;
 
-        cube.update(ground);
+            cube.update(ground);
 
-        // Atualiza a posição e rotação do modelo do carro
-        if (characterModel) {
-            characterModel.position.copy(cube.position);
-            characterModel.rotation.copy(cube.rotation);
+            if (characterModel) {
+                characterModel.position.copy(cube.position);
+                characterModel.rotation.copy(cube.rotation);
+                characterBoundingBox.setFromObject(characterModel);
+            }
 
-            // Atualiza a caixa de colisão do personagem
-            characterBoundingBox.setFromObject(characterModel);
-        }
-
-        enemies.forEach((enemy, index) => {
-            enemy.update(ground);
-            if (BoxCollision({ box1: cube, box2: enemy })) {
+            const roadWidth = 31.5;
+            if (cube.position.x < -roadWidth / 2 || cube.position.x > roadWidth / 2) {
                 cancelAnimationFrame(animationId);
-                alert('Game Over! Your score: ' + score);
+                gameOver(score);
+                return;
             }
 
-            // Atualiza a posição e rotação do modelo do carro inimigo
-            if (enemyCarInstances[index]) {
-                enemyCarInstances[index].position.copy(enemy.position);
-                enemyCarInstances[index].rotation.copy(enemy.rotation);
+            enemies.forEach((enemy, index) => {
+                enemy.update(ground);
 
-                // Atualiza a caixa de colisão do inimigo
-                enemyBoundingBoxes[index].setFromObject(enemyCarInstances[index]);
+                if (enemyCarInstances[index]) {
+                    enemyCarInstances[index].position.copy(enemy.position);
+                    enemyCarInstances[index].rotation.copy(enemy.rotation);
+                    enemyBoundingBoxes[index].setFromObject(enemyCarInstances[index]);
 
-                // Verifica colisão entre a caixa de colisão do personagem e a do inimigo
-                if (characterBoundingBox.intersectsBox(enemyBoundingBoxes[index])) {
-                    cancelAnimationFrame(animationId);
-                    alert('Game Over! Your score: ' + score);
+                    if (characterBoundingBox.intersectsBox(enemyBoundingBoxes[index])) {
+                        cancelAnimationFrame(animationId);
+                        gameOver(score + 1);
+                        return;
+                    }
                 }
-            }
-        });
-
-        if (cubeZPosition - cube.position.z >= distanceThreshold) {
-            loadNewRoad();
-            cubeZPosition = cube.position.z;
-        }
-
-        if (frames % spawnRate === 0) {
-            if (spawnRate > 20) {
-                spawnRate -= 20;
-            }
-
-            const enemy = new Box({
-                width: 1,
-                height: 0.5,
-                depth: 1,
-                position: {
-                    x: (Math.random() - 0.5) * 31.5,
-                    y: 0,
-                    z: cube.position.z - 40
-                },
-                velocity: { x: 0, y: 0, z: 0.01 },
-                zAcceleration: true
             });
-            enemy.castShadow = true;
-            scene.add(enemy);
-            enemies.push(enemy);
 
-            // Clona o modelo do carro inimigo e o adiciona na posição do inimigo
-            const enemyCarClone = enemyCarModel.clone();
-            enemyCarClone.position.copy(enemy.position);
-            enemyCarClone.rotation.copy(enemy.rotation);
-            scene.add(enemyCarClone);
-            enemyCarInstances.push(enemyCarClone);
+            if (cubeZPosition - cube.position.z >= distanceThreshold) {
+                loadNewRoad();
+                cubeZPosition = cube.position.z;
+            }
 
-            // Cria caixa de colisão para o inimigo
-            const enemyBoundingBox = new THREE.Box3().setFromObject(enemyCarClone);
-            enemyBoundingBoxes.push(enemyBoundingBox);
+            if (frames % spawnRate === 0) {
+                if (spawnRate > 20) {
+                    spawnRate -= 20;
+                }
+
+                const enemy = new Box({
+                    width: 0,
+                    height: 0,
+                    depth: 0,
+                    position: {
+                        x: (Math.random() - 0.5) * 31.5,
+                        y: 0,
+                        z: cube.position.z - 500
+                    },
+                    velocity: { x: 0, y: 0, z: 1 },
+                    zAcceleration: true
+                });
+                enemy.castShadow = true;
+                scene.add(enemy);
+                enemies.push(enemy);
+
+                const enemyCarClone = enemyCarModel.clone();
+                enemyCarClone.position.copy(enemy.position);
+                enemyCarClone.rotation.copy(enemy.rotation);
+                scene.add(enemyCarClone);
+                enemyCarInstances.push(enemyCarClone);
+
+                const enemyBoundingBox = new THREE.Box3().setFromObject(enemyCarClone);
+                enemyBoundingBoxes.push(enemyBoundingBox);
+            }
+
+            updateScore();
+
+            frames++;
         }
-
-        updateScore();
-
-        frames++;
     }
 
     animate();
@@ -390,6 +462,14 @@ function loadNewRoad() {
             model.position.set(0, -1.50, newPositionZ);
             model.rotation.y = Math.PI;
 
+            // Habilitar projeção de sombra para o novo trecho da estrada
+            model.traverse(function (child) {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+
             scene.add(model);
             roads.push(model);
         },
@@ -401,4 +481,3 @@ function loadNewRoad() {
 }
 
 animate();
-

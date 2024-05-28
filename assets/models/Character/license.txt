@@ -1,11 +1,11 @@
 Model Information:
-* title:	Azrael Long Horn
-* source:	https://sketchfab.com/3d-models/azrael-long-horn-0c96a3dca7df45bf85c228222fc9e5e4
-* author:	battleship.walking (https://sketchfab.com/battleship.walking)
+* title:	car for games unity
+* source:	https://sketchfab.com/3d-models/car-for-games-unity-4d9bbde680fe41349d7ad2b4672a720b
+* author:	Unity  (shehab house) (https://sketchfab.com/shahabahmed)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Azrael Long Horn" (https://sketchfab.com/3d-models/azrael-long-horn-0c96a3dca7df45bf85c228222fc9e5e4) by battleship.walking (https://sketchfab.com/battleship.walking) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "car for games unity" (https://sketchfab.com/3d-models/car-for-games-unity-4d9bbde680fe41349d7ad2b4672a720b) by Unity  (shehab house) (https://sketchfab.com/shahabahmed) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,7 +1,65 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0369a1, #0c4a6e); /* Fundo do corpo com gradiente */
+    background: linear-gradient(135deg, #87CEEB, #4682B4); /* Azul claro e azul aço */
+}
+
+#start-menu h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #0369a1; /* Azul aço */
+}
+
+#start-button, #instructions-button {
+    font-size: 24px;
+    padding: 15px 30px;
+    border-radius: 10px;
+    background-color: #0369a1; /* Azul claro */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+}
+
+#start-button:hover, #instructions-button:hover {
+    background-color: #6CA6CD; /* Azul um pouco mais escuro para o hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+#instructions {
+    display: none;
+    margin-top: 20px;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#instructions.hidden {
+    display: none;
+}
+
+#instructions.visible {
+    display: block;
+}
+
+#game-container {
+    display: none;
+}
+
+#score-container {
+    position: fixed;
+    top: 10px;
+    left: 90%;
+    font-size: 24px;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 #menu-container {
@@ -10,52 +68,62 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: 80%; /* Aumenta a largura do contêiner */
-    max-width: 800px; /* Define uma largura máxima para o contêiner */
-    padding: 40px; /* Aumenta o preenchimento interno */
-    background-color: rgba(255, 255, 255, 0.9); /* Adiciona um fundo semitransparente */
-    border-radius: 20px; /* Arredonda as bordas */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra para profundidade */
+    width: 80%;
+    max-width: 800px;
+    padding: 100px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-#start-menu h1 {
-    font-size: 48px; /* Aumenta o tamanho do texto do título */
-    margin-bottom: 20px; /* Espaçamento abaixo do título */
-    color: #0369a1; /* Cor do texto do título */
+.game-over-hidden {
+    display: none;
 }
 
-#start-button {
-    font-size: 24px; /* Aumenta o tamanho do texto do botão */
-    padding: 15px 30px; /* Adiciona um preenchimento ao redor do botão */
-    border-radius: 10px; /* Arredonda as bordas do botão */
-    background-color: #0369a1; /* Cor de fundo do botão */
-    color: white; /* Cor do texto do botão */
-    border: none; /* Remove a borda do botão */
-    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
-    transition: background-color 0.3s, box-shadow 0.3s; /* Adiciona uma transição suave ao mudar a cor de fundo e a sombra */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra ao botão */
+#game-over-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#start-button:hover {
-    background-color: #025d88; /* Cor de fundo do botão ao passar o mouse sobre ele */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Aumenta a sombra ao passar o mouse */
+#game-over-menu {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
 }
 
-#game-container {
-    display: none; /* Initially hidden */
+#game-over-menu h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #d9534f; /* Cor vermelha para destaque */
 }
 
-#score-container {
-    position: fixed; /* Fixa o placar na tela */
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%); /* Centraliza horizontalmente */
+#game-over-menu p {
     font-size: 24px;
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
-    padding: 10px 20px; /* Espaçamento interno */
-    border-radius: 10px; /* Arredonda as bordas */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra */
+    margin-bottom: 30px;
+    color: #333;
 }
 
+#restart-button {
+    font-size: 24px;
+    padding: 15px 30px;
+    border-radius: 10px;
+    background-color: #5cb85c; /* Cor verde para o botão de reinício */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
 
+#restart-button:hover {
+    background-color: #4cae4c;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}

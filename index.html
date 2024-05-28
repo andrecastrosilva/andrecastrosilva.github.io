@@ -18,12 +18,26 @@
     </script>
     
     <script type="module" src="script.js"></script>
+    
 </head>
 <body>
   <div id="menu-container">
     <div id="start-menu">
-      <h1>Press enter to start</h1>
+      <h1>Corrida de Obstáculos</h1>
       <button id="start-button">Iniciar Jogo</button>
+      <button id="instructions-button">Instruções</button>
+      <div id="instructions" class="hidden">
+        <h2>Instruções do Jogo</h2>
+        <p>Use as seguintes teclas para jogar:</p>
+        <ul>
+          <li><strong>W</strong>: Move para frente</li>
+          <li><strong>A</strong>: Move para a esquerda</li>
+          <li><strong>D</strong>: Move para a direita</li>
+          <li><strong>P</strong>: Pausa o jogo</li>
+          <li><strong>C</strong>: Mudar a camara</li>
+        </ul>
+        <p>Evite os carros inimigos e fique na estrada para sobreviver o máximo de tempo possível.</p>
+      </div>
     </div>
   </div>
   <div id="game-container">
@@ -33,5 +47,25 @@
     <span id="score-label">Score:</span>
     <span id="score-value">0</span>
   </div>
+  <div id="game-over-scene" class="game-over-hidden">
+    <div id="game-over-menu">
+      <h1>Game Over!</h1>
+      <p>Your final score: <span id="game-over-score"></span></p>
+      <button id="restart-button">Restart Game</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('instructions-button').addEventListener('click', () => {
+        const instructions = document.getElementById('instructions');
+        if (instructions.classList.contains('hidden')) {
+            instructions.classList.remove('hidden');
+            instructions.classList.add('visible');
+        } else {
+            instructions.classList.remove('visible');
+            instructions.classList.add('hidden');
+        }
+    });
+  </script>
 </body>
 </html>

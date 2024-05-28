@@ -1,2 +1,4 @@
-opção para mudar a camara
-carro
+explosao
+sons e musica
+menu inicial escrever o nome e ranking depois
+
