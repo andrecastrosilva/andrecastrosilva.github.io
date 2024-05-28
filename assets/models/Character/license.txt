@@ -1,11 +1,11 @@
 Model Information:
-* title:	Angela - Tom Friends (Rigged)
-* source:	https://sketchfab.com/3d-models/angela-tom-friends-rigged-21c48865423844ddb6888595372f9033
-* author:	nj-josh-man (https://sketchfab.com/njhosh9u)
+* title:	Azrael Long Horn
+* source:	https://sketchfab.com/3d-models/azrael-long-horn-0c96a3dca7df45bf85c228222fc9e5e4
+* author:	battleship.walking (https://sketchfab.com/battleship.walking)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Angela - Tom Friends (Rigged)" (https://sketchfab.com/3d-models/angela-tom-friends-rigged-21c48865423844ddb6888595372f9033) by nj-josh-man (https://sketchfab.com/njhosh9u) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Azrael Long Horn" (https://sketchfab.com/3d-models/azrael-long-horn-0c96a3dca7df45bf85c228222fc9e5e4) by battleship.walking (https://sketchfab.com/battleship.walking) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

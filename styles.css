@@ -1,15 +1,61 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0369a1, #0c4a6e); /* Fundo do corpo com gradiente */
+}
+
 #menu-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    width: 80%; /* Aumenta a largura do contêiner */
+    max-width: 800px; /* Define uma largura máxima para o contêiner */
+    padding: 40px; /* Aumenta o preenchimento interno */
+    background-color: rgba(255, 255, 255, 0.9); /* Adiciona um fundo semitransparente */
+    border-radius: 20px; /* Arredonda as bordas */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra para profundidade */
 }
 
-#start-menu {
-    margin-bottom: 20px;
+#start-menu h1 {
+    font-size: 48px; /* Aumenta o tamanho do texto do título */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    color: #0369a1; /* Cor do texto do título */
+}
+
+#start-button {
+    font-size: 24px; /* Aumenta o tamanho do texto do botão */
+    padding: 15px 30px; /* Adiciona um preenchimento ao redor do botão */
+    border-radius: 10px; /* Arredonda as bordas do botão */
+    background-color: #0369a1; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda do botão */
+    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Adiciona uma transição suave ao mudar a cor de fundo e a sombra */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra ao botão */
+}
+
+#start-button:hover {
+    background-color: #025d88; /* Cor de fundo do botão ao passar o mouse sobre ele */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Aumenta a sombra ao passar o mouse */
 }
 
 #game-container {
     display: none; /* Initially hidden */
 }
+
+#score-container {
+    position: fixed; /* Fixa o placar na tela */
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza horizontalmente */
+    font-size: 24px;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente */
+    padding: 10px 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Arredonda as bordas */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra */
+}
+
+

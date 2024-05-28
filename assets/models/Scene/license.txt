@@ -1,11 +1,11 @@
 Model Information:
-* title:	Modern / Future Street 2
-* source:	https://sketchfab.com/3d-models/modern-future-street-2-d4616756f4ef4d3a887776f403e0f519
-* author:	nenkea (https://sketchfab.com/nenkea)
+* title:	Road Intersection
+* source:	https://sketchfab.com/3d-models/road-intersection-896442019d0d401d91ed367c996954b2
+* author:	Miguel-Angel (https://sketchfab.com/Miguel-Angel)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Modern / Future Street 2" (https://sketchfab.com/3d-models/modern-future-street-2-d4616756f4ef4d3a887776f403e0f519) by nenkea (https://sketchfab.com/nenkea) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Road Intersection" (https://sketchfab.com/3d-models/road-intersection-896442019d0d401d91ed367c996954b2) by Miguel-Angel (https://sketchfab.com/Miguel-Angel) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
