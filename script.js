@@ -227,18 +227,20 @@ const ground = new Box({
 ground.receiveShadow = true;
 scene.add(ground);
 
+// Configure a directional light to cast shadows
 const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.y = 3;
-light.position.z = 1;
-light.castShadow = true; // Habilitar sombras para a luz
+light.position.set(0, 10, 10); // Adjust the light position
+light.castShadow = true; // Enable shadow casting
 
-light.shadow.mapSize.width = 1024; // Tamanho do mapa de sombras (opcional)
-light.shadow.mapSize.height = 1024; // Tamanho do mapa de sombras (opcional)
-light.shadow.camera.near = 0.5; // Distância mínima da sombra (opcional)
-light.shadow.camera.far = 50; // Distância máxima da sombra (opcional)
+light.shadow.mapSize.width = 1024; // Optional: Shadow map size
+light.shadow.mapSize.height = 1024; // Optional: Shadow map size
+light.shadow.camera.near = 0.5; // Optional: Near clipping plane for shadow camera
+light.shadow.camera.far = 50; // Optional: Far clipping plane for shadow camera
 
 scene.add(light);
-scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Adjust ambient light intensity
+scene.add(ambientLight);
 
 camera.position.z = 5;
 
@@ -246,7 +248,7 @@ const Keys = {
     a: { pressed: false },
     d: { pressed: false },
     s: { pressed: false },
-    w: { pressed: false },
+    
     p: { pressed: false }
 };
 
@@ -261,9 +263,7 @@ window.addEventListener('keydown', (event) => {
         case 'KeyS':
             Keys.s.pressed = true;
             break;
-        case 'KeyW':
-            Keys.w.pressed = true;
-            break;
+        
         case 'KeyC': // Change camera angle
             cameraAngle = (cameraAngle + 1) % 3;
             updateCameraPosition();
@@ -289,9 +289,7 @@ window.addEventListener('keyup', (event) => {
         case 'KeyS':
             Keys.s.pressed = false;
             break;
-        case 'KeyW':
-            Keys.w.pressed = false;
-            break;
+        
         case 'KeyP':
             Keys.p.pressed = false;
             break;
