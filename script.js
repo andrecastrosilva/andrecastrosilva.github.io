@@ -220,7 +220,7 @@ const ground = new Box({
     width: 31.5,
     height: 0.01,
     depth: 10000,
-    color: '#0369a1',
+    color: '#000000',
     position: { x: cubeStartPosition.x, y: cubeStartPosition.y - 0.75, z: cubeStartPosition.z - 4950 }
 });
 
